@@ -30,6 +30,11 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
+                        @if (Auth::check())
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('profile') }}">Profile</a>
+                            </li>
+                        @endif
 
                     </ul>
 
@@ -81,9 +86,7 @@
         </div>
         </div>
 
-        <main class="py-4">
-            @yield('content')
-        </main>
+
     </div>
 </body>
 </html>

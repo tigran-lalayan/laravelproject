@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,10 +20,23 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Route::get('/', 'HomeController@index');
+Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/profile', function () {
-    return view('profile');
+    Auth::routes();
+
+
+
+
+    Route::middleware(['auth'])->group(function() {
+
+        Route::get('/', [HomeController::class, 'index'])->name('home');
+        Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard')->middleware('auth');
+
+        Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    ;
+
+
 });
