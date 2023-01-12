@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -21,10 +21,25 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'avatar',
+        'about',
+        'birthday'
     ];
 
+
+    public function getAvatarAttribute()
+    {
+        return url('storage/avatars/'.$this->attributes['avatar']);
+    }
+
+    public function avatar()
+    {
+        return $this->avatar ? asset('storage/'.$this->avatar) : null;
+    }
+
+
     /**
-     * The attributes that should be hidden for serialization.
+     * The attributes that should be hidden for arrays.
      *
      * @var array<int, string>
      */
@@ -34,7 +49,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be cast.
+     * The attributes that should be cast to native types.
      *
      * @var array<string, string>
      */

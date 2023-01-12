@@ -36,7 +36,10 @@ Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('r
         Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard')->middleware('auth');
 
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
-    ;
+        Route::post('update_profile', [ProfileController::class, 'update'])->name('update_profile');
+
+
+        ;
 
 
 });
