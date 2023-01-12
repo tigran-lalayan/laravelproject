@@ -27,6 +27,8 @@ class User extends Authenticatable
     ];
 
 
+
+
     public function getAvatarAttribute()
     {
         return url('storage/avatars/'.$this->attributes['avatar']);

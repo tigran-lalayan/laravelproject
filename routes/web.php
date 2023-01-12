@@ -37,6 +37,8 @@ Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('r
 
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
         Route::post('update_profile', [ProfileController::class, 'update'])->name('update_profile');
+        Route::get('/user/{user}/profile', [\App\Http\Controllers\UserProfileController::class, 'show'])->name('user_profile');
+        Route::get('/users', [\App\Http\Controllers\UsersController::class, 'index'])->name('users');
 
 
         ;

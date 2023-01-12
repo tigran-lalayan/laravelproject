@@ -15,6 +15,8 @@ class ProfileController extends Controller
         return view('profile', compact('user'));
     }
 
+
+
     public function update(Request $request)
     {
         $request->validate([
@@ -64,7 +66,6 @@ class ProfileController extends Controller
         // Return back with success message
         return $file_name;
     }
-
 
 
 }
