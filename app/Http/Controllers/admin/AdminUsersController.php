@@ -13,4 +13,16 @@ class AdminUsersController extends Controller
         $users = User::all();
         return view('admin_users', compact('users'));
     }
+
+    public function promote(Request $request)
+    {
+        $user = User::findOrFail($request->input('id'));
+        $user->is_admin = "1";
+        $user->save();
+
+        return redirect()->route('admin_users')->with('success', 'User promoted to admin.');
+    }
+
+
+
 }

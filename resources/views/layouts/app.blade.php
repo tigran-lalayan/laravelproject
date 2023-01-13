@@ -30,7 +30,14 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-                        @if (Auth::check())
+                        @if (Auth::check() && Auth::user()->isAdmin())
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin_profile') }}">Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin_users') }}">Users</a>
+                            </li>
+                        @elseif (Auth::check())
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('profile') }}">Profile</a>
                             </li>
@@ -38,6 +45,7 @@
                                 <a class="nav-link" href="{{ route('users') }}">Users</a>
                             </li>
                         @endif
+
 
 
                     </ul>

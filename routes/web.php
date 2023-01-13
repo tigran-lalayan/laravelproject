@@ -34,7 +34,6 @@ Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('r
 
 Auth::routes();
 
-Route::middleware(['auth', 'is_admin'])->get('/admin', [AdminController::class, 'index'])->name('admin_dashboard');
 
 
 // Admin routes
@@ -44,6 +43,9 @@ Route::middleware(['auth', 'is_admin'])->group(function() {
     Route::get('/admin/users/{user}', [AdminUsersProfileController::class, 'show'])->name('admin_user_profile');
     Route::post('/admin/users/{user}/promote', [AdminUsersProfileController::class, 'promote'])->name('admin_promote_user');
     Route::get('/admin', [AdminDashboardController::class, 'index'])->name('admin_dashboard');
+    Route::post('admin_update_profile', [AdminProfileController::class, 'update'])->name('admin_update_profile');
+    Route::post('admin_promote_user/{id}', [AdminUsersController::class, 'promote'])->name('admin_promote_user');
+    Route::post('admin_promote_user', [AdminUsersProfileController::class, 'promote'])->name('admin_promote_user');
 
 });
 

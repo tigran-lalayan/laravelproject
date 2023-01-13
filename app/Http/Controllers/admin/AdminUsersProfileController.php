@@ -22,4 +22,13 @@ class AdminUsersProfileController extends Controller
         $viewUser = User::findOrFail($id);
         return view('admin_user_profile', ['user' => $viewUser]);
     }
+
+    public function promote($id)
+    {
+        $user = User::findOrFail($id);
+        $user->is_admin = "1";
+        $user->save();
+
+        return redirect()->route('admin_user_profile')->with('success', 'User promoted to admin.');
+    }
 }

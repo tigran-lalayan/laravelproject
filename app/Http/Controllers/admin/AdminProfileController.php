@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,12 +22,58 @@ class AdminProfileController extends Controller
         if (!$user->isAdmin()) {
             return redirect()->back()->withErrors(['message' => 'You are not authorized to access this page']);
         }
+        return view('admin_profile', compact('user'));
     }
 
     public function update(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'about_me' => 'nullable', // setting the validation as nullable means it's not required
+            'birthday' => 'nullable|date', // adding the date validation for the birthday field
+
+        ]);
+
         $user = Auth::user();
-        $user->update($request->all());
-        return redirect()->route('admin.profile');
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->about_me = $request->input('about_me');
+        $user->birthday = $request->input('birthday');
+        if($request->hasFile('avatar')){
+            $user->avatar = $this->updateAvatar($request);
+        }
+        $user->save();
+
+        return redirect()->route('admin_profile')->with('success', 'Your profile has been updated.');
     }
+
+
+    public function updateAvatar(Request $request)
+    {
+        // Validate the request data
+        $request->validate([
+            'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        // Retrieve the user's ID
+        $user_id = auth()->user()->id;
+
+        // Get the uploaded avatar file
+        $avatar = $request->file('avatar');
+
+        // Generate a unique file name
+        $file_name = time().'.'.$avatar->getClientOriginalExtension();
+
+        // Move the file to the avatar directory
+        $avatar->store('avatars', 'public');
+
+        // Update the user's avatar in the database
+        User::whereId($user_id)->update(['avatar' => $file_name]);
+
+        // Return back with success message
+        return $file_name;
+    }
+
+
 }

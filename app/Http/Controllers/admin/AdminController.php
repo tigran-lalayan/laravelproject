@@ -9,11 +9,12 @@ class AdminController extends Controller
 {
     public function index()
     {
-        if (Auth::user()->isAdmin()) {
+        if (auth()->user()->isAdmin()) {
             return view('admin_dashboard');
-        } else {
-            return redirect()->route('home');
         }
+
+
     }
+
 }
 
