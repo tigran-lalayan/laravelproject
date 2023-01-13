@@ -27,6 +27,11 @@ class User extends Authenticatable
     ];
 
 
+    public function isAdmin()
+    {
+        return $this->is_admin;
+    }
+
 
 
     public function getAvatarAttribute()
@@ -38,6 +43,7 @@ class User extends Authenticatable
     {
         return $this->avatar ? asset('storage/'.$this->avatar) : null;
     }
+
 
 
     /**

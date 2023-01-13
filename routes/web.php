@@ -1,7 +1,14 @@
 <?php
 
+use App\Http\Controllers\admin\AdminController;
+use App\Http\Controllers\admin\AdminDashboardController;
+use App\Http\Controllers\Admin\AdminProfileController;
+use App\Http\Controllers\Admin\AdminUsersController;
+use App\Http\Controllers\Admin\AdminUsersProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -25,23 +32,34 @@ Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 
 
-    Auth::routes();
+Auth::routes();
+
+Route::middleware(['auth', 'is_admin'])->get('/admin', [AdminController::class, 'index'])->name('admin_dashboard');
 
 
-
-
-    Route::middleware(['auth'])->group(function() {
-
-        Route::get('/', [HomeController::class, 'index'])->name('home');
-        Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard')->middleware('auth');
-
-        Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
-        Route::post('update_profile', [ProfileController::class, 'update'])->name('update_profile');
-        Route::get('/user/{user}/profile', [\App\Http\Controllers\UserProfileController::class, 'show'])->name('user_profile');
-        Route::get('/users', [\App\Http\Controllers\UsersController::class, 'index'])->name('users');
-
-
-        ;
-
+// Admin routes
+Route::middleware(['auth', 'is_admin'])->group(function() {
+    Route::get('/admin/profile', [AdminProfileController::class, 'index'])->name('admin_profile');
+    Route::get('/admin/users', [AdminUsersController::class, 'index'])->name('admin_users');
+    Route::get('/admin/users/{user}', [AdminUsersProfileController::class, 'show'])->name('admin_user_profile');
+    Route::post('/admin/users/{user}/promote', [AdminUsersProfileController::class, 'promote'])->name('admin_promote_user');
+    Route::get('/admin', [AdminDashboardController::class, 'index'])->name('admin_dashboard');
 
 });
+
+
+// User routes
+Route::middleware(['auth'])->group(function(){
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::post('update_profile', [ProfileController::class, 'update'])->name('update_profile');
+    Route::get('/user/{user}/profile', [UserProfileController::class, 'show'])->name('user_profile');
+    Route::get('/users', [UsersController::class, 'index'])->name('users');
+});
+
+
+
+
+
