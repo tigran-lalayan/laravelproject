@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\Admin\AdminCategoryController;
+use App\Http\Controllers\Admin\AdminContactController;
 use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminNewsController;
@@ -8,6 +10,7 @@ use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\AdminUsersController;
 use App\Http\Controllers\Admin\AdminUsersProfileController;
 use App\Http\Controllers\Admin\AdminFaqController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsController;
@@ -33,14 +36,20 @@ Route::get('/', function () {
 });
 
 
-Auth::routes();
+
 
 Route::get('/', 'HomeController@index');
 Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::get('/news', [NewsController::class, 'index'])->name('news');
 Route::get('/faq', [FaqController::class, 'index'])->name('faq');
+Route::get('/contact', [ContactController::class, 'index'])->name('contacts');
+Route::post('/contact', [ContactController::class, 'store'])->name('contact_store');
 
+Route::get('/about', [AboutController::class, 'index'])->name('about');
+
+
+Auth::routes();
 
 // Admin routes
 Route::middleware(['auth', 'is_admin'])->group(function() {
@@ -79,6 +88,8 @@ Route::middleware(['auth', 'is_admin'])->group(function() {
     Route::delete('/admin/category/{id}', [AdminCategoryController::class, 'Delete'])->name('admin_category_delete');
 
 
+    Route::get('/contacts', [AdminContactController::class, 'index'])->name('admin_contacts');
+    Route::delete('/contacts/{id}', [AdminContactController::class, 'destroy'])->name('admin_contacts_destroy');
 
 });
 
@@ -92,6 +103,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/users', [UsersController::class, 'index'])->name('users');
     Route::post('update_profile', [ProfileController::class, 'update'])->name('update_profile');
     Route::get('/user/{user}/profile', [UserProfileController::class, 'show'])->name('user_profile');
+
 
 
 
