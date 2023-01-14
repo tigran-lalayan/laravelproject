@@ -56,10 +56,11 @@ Route::middleware(['auth', 'is_admin'])->group(function() {
     Route::get('/admin/profile', [AdminProfileController::class, 'index'])->name('admin_profile');
     Route::get('/admin/users', [AdminUsersController::class, 'index'])->name('admin_users');
     Route::get('/admin/users/{user}', [AdminUsersProfileController::class, 'show'])->name('admin_user_profile');
-    Route::post('/admin/users/{user}/promote', [AdminUsersProfileController::class, 'promote'])->name('admin_promote_user');
     Route::get('/admin', [AdminDashboardController::class, 'index'])->name('admin_dashboard');
     Route::post('admin_update_profile', [AdminProfileController::class, 'update'])->name('admin_update_profile');
-    Route::post('admin_promote_user/{id}', [AdminUsersController::class, 'promote'])->name('admin_promote_user');
+    Route::post('/admin/users/{user}/promote', [AdminUsersProfileController::class, 'promote'])->name('admin_promote_user');
+    Route::get('/admin/users/{user}/promote', [AdminUsersProfileController::class, 'promote'])->name('admin_promote_user');
+
     Route::post('admin_promote_user', [AdminUsersProfileController::class, 'promote'])->name('admin_promote_user');
 
     Route::match(['get', 'post'], 'admin/news', [AdminNewsController::class, 'index'])->name('admin_news_index');
@@ -104,12 +105,4 @@ Route::middleware(['auth'])->group(function(){
     Route::post('update_profile', [ProfileController::class, 'update'])->name('update_profile');
     Route::get('/user/{user}/profile', [UserProfileController::class, 'show'])->name('user_profile');
 
-
-
-
 });
-
-
-
-
-

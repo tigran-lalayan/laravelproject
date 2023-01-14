@@ -1,7 +1,8 @@
 @extends('layouts.admin')
 
 @section('content')
-<table>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <table>
     <thead>
     <tr>
         <th>Name</th>
@@ -13,23 +14,48 @@
     </thead>
     <tbody>
     @foreach($users as $user)
-        <tr>
-            <td>{{ $user->name }}</td>
+        <tr data-user-id="{{ $user->id }}">
+        <td>{{ $user->name }}</td>
             <td>{{ $user->description }}</td>
             <td>{{ $user->birthday }}</td>
             <td>{{ $user->created_at }}</td>
             <td>
                 <a href="{{ route('admin_user_profile', $user->id) }}">View Profile</a>
-                <form action="{{ route('admin_promote_user', $user->id) }}" method="POST">
+                <form action="{{ route('admin_promote_user', $user->id) }}" method="POST" id="promoteForm">
                     @csrf
-                    <input type="hidden" name="id" value="{{ $user->id }}">
-                    <input type="checkbox" name="is_admin" onchange="this.form.submit()" {{ $user->is_admin ? 'checked' : '' }}> Promote to Admin
+                    @method('POST')
+                    <input type="checkbox" name="is_admin" onchange="promoteUser(this)" {{ $user->is_admin ? 'checked' : '' }}> Promote to Admin
                 </form>
+
+
 
 
             </td>
         </tr>
     @endforeach
+    <script> function promoteUser(checkbox) {
+            var userId = $(checkbox).closest('tr').data('user-id');
+            var isAdmin = checkbox.checked;
+
+            $.ajax({
+                url: '/admin/users/' + userId + '/promote',
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    is_admin: isAdmin
+                },
+                success: function() {
+                    // Handle success
+                },
+                error: function() {
+                    // Handle error
+                }
+            });
+        }
+
+
+
+    </script>
     </tbody>
 </table>
 @endsection

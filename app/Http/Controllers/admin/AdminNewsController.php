@@ -47,7 +47,7 @@ class AdminNewsController extends Controller
             'cover_image' => 'required|image',
             'content' => 'required',
         ]);
-        $path = $request->file('cover_image')->store('public/news');
+        $path = $request->file('cover_image')->store('public/storage');
         $validatedData['cover_image'] = $path;
         $validatedData['publishing_date'] = now();  // set the publishing date to the current date and time
         News::create($validatedData);
@@ -101,7 +101,7 @@ class AdminNewsController extends Controller
         if($request->hasFile('cover_image')){
             $file = $request->file('cover_image');
             $fileName = time().$file->getClientOriginalName();
-            $file->move(public_path().'/images/', $fileName);
+            $file->move(public_path().'/storage/', $fileName);
             $news->cover_image = $fileName;
         }
 
