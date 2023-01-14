@@ -40,6 +40,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('admin_news_index') }}">Latest News</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin_faq_index') }}">FAQ</a>
+                            </li>
                         @elseif (Auth::check())
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('profile') }}">Profile</a>
@@ -49,6 +52,9 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('news') }}">Latest News</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('faq') }}">FAQ</a>
                             </li>
                         @else
                             <li class="nav-item">

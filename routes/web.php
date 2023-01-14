@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminCategoryController;
 use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminNewsController;
 use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\AdminUsersController;
 use App\Http\Controllers\Admin\AdminUsersProfileController;
+use App\Http\Controllers\Admin\AdminFaqController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsController;
@@ -30,14 +32,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+Auth::routes();
+
 Route::get('/', 'HomeController@index');
 Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::get('/news', [NewsController::class, 'index'])->name('news');
 Route::get('/faq', [FaqController::class, 'index'])->name('faq');
-
-Auth::routes();
-
 
 
 // Admin routes
@@ -51,10 +53,32 @@ Route::middleware(['auth', 'is_admin'])->group(function() {
     Route::post('admin_promote_user/{id}', [AdminUsersController::class, 'promote'])->name('admin_promote_user');
     Route::post('admin_promote_user', [AdminUsersProfileController::class, 'promote'])->name('admin_promote_user');
 
-
+    Route::match(['get', 'post'], 'admin/news', [AdminNewsController::class, 'index'])->name('admin_news_index');
     Route::get('admin/news/{id}/edit', [AdminNewsController::class, 'edit'])->name('admin_news_edit');
     Route::get('admin/news/create', [AdminNewsController::class, 'create'])->name('admin_news_create');
     Route::post('admin/news', [AdminNewsController::class, 'store'])->name('admin_news_store');
+    Route::delete('admin/news/{id}', [AdminNewsController::class, 'destroy'])->name('admin_news_destroy');
+    Route::put('admin/news/{id}', [AdminNewsController::class, 'update'])->name('admin_news_update');
+
+
+
+    Route::get('/admin/faq', [AdminFaqController::class, 'Index'])->name('admin_faq_index');
+    Route::get('admin/faq/create', [AdminFaqController::class, 'create'])->name('admin_faq_create');
+    Route::post('/admin/faq', [AdminFaqController::class, 'Store'])->name('admin_faq_store');
+    Route::get('/admin/faq/{id}/edit', [AdminFaqController::class, 'Edit'])->name('admin_faq_edit');
+    Route::put('/admin/faq/{id}', [AdminFaqController::class, 'Update'])->name('admin_faq_update');
+    Route::delete('/admin/faq/{id}', [AdminFaqController::class, 'Delete'])->name('admin_faq_delete');
+
+
+
+    Route::get('/admin/category', [AdminCategoryController::class, 'Index'])->name('admin_category_index');
+    Route::get('admin/category/create', [AdminCategoryController::class, 'create'])->name('admin_category_create');
+    Route::post('/admin/category', [AdminCategoryController::class, 'Store'])->name('admin_category_store');
+    Route::get('/admin/category/{id}/edit', [AdminCategoryController::class, 'Edit'])->name('admin_category_edit');
+    Route::put('/admin/category/{id}', [AdminCategoryController::class, 'Update'])->name('admin_category_update');
+    Route::delete('/admin/category/{id}', [AdminCategoryController::class, 'Delete'])->name('admin_category_delete');
+
+
 
 });
 
@@ -65,13 +89,9 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
     Route::get('/admin', [AdminController::class, 'index'])->name('admin');
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::get('/users', [UsersController::class, 'index'])->name('users');
     Route::post('update_profile', [ProfileController::class, 'update'])->name('update_profile');
     Route::get('/user/{user}/profile', [UserProfileController::class, 'show'])->name('user_profile');
-    Route::match(['get', 'post'], 'admin/news', [AdminNewsController::class, 'index'])->name('admin_news_index');
-    Route::get('admin/news/create', [AdminNewsController::class, 'create'])->name('admin_news_create');
-    Route::delete('admin/news/{id}', [AdminNewsController::class, 'destroy'])->name('admin_news_destroy');
-    Route::put('admin/news/{id}', [AdminNewsController::class, 'update'])->name('admin_news_update');
-    Route::post('admin/news', [AdminNewsController::class, 'store'])->name('admin_news_store');
 
 
 

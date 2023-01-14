@@ -91,16 +91,24 @@ class AdminNewsController extends Controller
     {
         $validatedData = $request->validate([
             'title' => 'required|max:255',
-            'cover_image' => 'required',
             'content' => 'required',
         ]);
 
         $news = News::findOrFail($id);
         $news->update($validatedData);
         $news->publishing_date = now();  // set the publishing date to the current date and time
+
+        if($request->hasFile('cover_image')){
+            $file = $request->file('cover_image');
+            $fileName = time().$file->getClientOriginalName();
+            $file->move(public_path().'/images/', $fileName);
+            $news->cover_image = $fileName;
+        }
+
         $news->save();
         return redirect()->route('admin_news_index')->with('success', 'News item updated successfully.');
     }
+
 
 
 
