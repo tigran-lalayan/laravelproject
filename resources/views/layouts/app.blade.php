@@ -37,12 +37,22 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('admin_users') }}">Users</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin_news_index') }}">Latest News</a>
+                            </li>
                         @elseif (Auth::check())
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('profile') }}">Profile</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('users') }}">Users</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('news') }}">Latest News</a>
+                            </li>
+                        @else
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('news') }}">Latest News</a>
                             </li>
                         @endif
 
