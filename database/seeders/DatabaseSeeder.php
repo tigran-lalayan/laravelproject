@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Database\Seeders\FaqTableSeeder;
 use Illuminate\Database\Seeder;
 use Database\Seeders\NewsTableSeeder;
 
@@ -22,6 +23,7 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
         $this->call(NewsTableSeeder::class);
+        $this->call(FaqTableSeeder::class);
 
 
     }

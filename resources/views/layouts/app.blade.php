@@ -54,6 +54,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('news') }}">Latest News</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('faq') }}">FAQ</a>
+                            </li>
                         @endif
 
 

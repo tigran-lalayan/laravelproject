@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AdminNewsController;
 use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\AdminUsersController;
 use App\Http\Controllers\Admin\AdminUsersProfileController;
+use App\Http\Controllers\FaqController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProfileController;
@@ -33,7 +34,7 @@ Route::get('/', 'HomeController@index');
 Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::get('/news', [NewsController::class, 'index'])->name('news');
-
+Route::get('/faq', [FaqController::class, 'index'])->name('faq');
 
 Auth::routes();
 
@@ -71,6 +72,7 @@ Route::middleware(['auth'])->group(function(){
     Route::delete('admin/news/{id}', [AdminNewsController::class, 'destroy'])->name('admin_news_destroy');
     Route::put('admin/news/{id}', [AdminNewsController::class, 'update'])->name('admin_news_update');
     Route::post('admin/news', [AdminNewsController::class, 'store'])->name('admin_news_store');
+
 
 
 });
