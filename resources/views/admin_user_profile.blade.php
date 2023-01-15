@@ -27,15 +27,5 @@
             <th>Creation Date</th>
             <td>{{ $user->created_at }}</td>
         </tr>
-        <tr>
-            <th>Promote to Admin</th>
-            <td>
-                <form action="{{ route('admin_promote_user', $user->id) }}" method="POST">
-                    @csrf
-                    <input type="checkbox" name="is_admin" value="1" {{ $user->is_admin ? 'checked' : '' }}>
-                    <button type="submit">Update</button>
-                </form>
-            </td>
-        </tr>
     </table>
 @endsection

@@ -101,7 +101,7 @@ class AdminNewsController extends Controller
         if($request->hasFile('cover_image')){
             $file = $request->file('cover_image');
             $fileName = time().$file->getClientOriginalName();
-            $file->move(public_path().'/storage/', $fileName);
+            $file->move(public_path().'/public/storage/', $fileName);
             $news->cover_image = $fileName;
         }
 

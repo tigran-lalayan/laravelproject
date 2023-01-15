@@ -24,7 +24,7 @@
                 <form action="{{ route('admin_promote_user', $user->id) }}" method="POST" id="promoteForm">
                     @csrf
                     @method('POST')
-                    <input type="checkbox" name="is_admin" onchange="promoteUser(this)" {{ $user->is_admin ? 'checked' : '' }}> Promote to Admin
+                    <input type="checkbox" name="is_admin" onchange="promoteUser(this)" {{ $user->is_admin ? 'checked disabled' : '' }}> Promote to Admin
                 </form>
 
 
@@ -33,7 +33,9 @@
             </td>
         </tr>
     @endforeach
-    <script> function promoteUser(checkbox) {
+    <script>
+
+        function promoteUser(checkbox) {
             var userId = $(checkbox).closest('tr').data('user-id');
             var isAdmin = checkbox.checked;
 
@@ -51,9 +53,8 @@
                     // Handle error
                 }
             });
+
         }
-
-
 
     </script>
     </tbody>

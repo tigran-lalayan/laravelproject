@@ -3,7 +3,7 @@
 @section('content')
     <h1>Faq Categories</h1>
     <a href="{{ route('admin_category_create') }}" class="btn btn-primary mb-3">Create New Category</a>
-
+    <p>Small note: you have to delete all FAQ's related to a category to delete a category.</p>
     <table class="table table-striped">
         <thead>
         <tr>

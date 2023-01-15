@@ -18,6 +18,7 @@
             <li>Stack overflow: <a href="https://stackoverflow.com/">https://stackoverflow.com/</a></li>
             <li>laracasts: <a href="https://laracasts.com">https://laracasts.com</a></li>
             <li>MySQL: <a href="https://www.mysql.com/">https://www.mysql.com/</a></li>
+            <li>Jquery: <a href="https://api.jquery.com/">https://api.jquery.com</a></li>
         </ul>
     </div>
 @endsection

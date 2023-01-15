@@ -16,7 +16,7 @@ class AdminContactController extends Controller
     public function index()
     {
         $contacts = Contact::all();
-        return view('admin_contact_index', compact('contacts'));
+        return view('admin_contact', compact('contacts'));
     }
 
     /**
@@ -25,11 +25,11 @@ class AdminContactController extends Controller
      * @param int $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function delete($id)
     {
         $contact = Contact::findOrFail($id);
         $contact->delete();
-        return redirect()->route('admin_contact_index')->with('success', 'Contact deleted successfully.');
+        return redirect()->route('admin_contact')->with('success', 'Contact deleted successfully.');
     }
 }
 

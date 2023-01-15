@@ -31,9 +31,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 
 
@@ -58,10 +56,9 @@ Route::middleware(['auth', 'is_admin'])->group(function() {
     Route::get('/admin/users/{user}', [AdminUsersProfileController::class, 'show'])->name('admin_user_profile');
     Route::get('/admin', [AdminDashboardController::class, 'index'])->name('admin_dashboard');
     Route::post('admin_update_profile', [AdminProfileController::class, 'update'])->name('admin_update_profile');
-    Route::post('/admin/users/{user}/promote', [AdminUsersProfileController::class, 'promote'])->name('admin_promote_user');
-    Route::get('/admin/users/{user}/promote', [AdminUsersProfileController::class, 'promote'])->name('admin_promote_user');
+    Route::post('/admin/users/{user}/promote', [AdminUsersController::class, 'promote'])->name('admin_promote_user');
 
-    Route::post('admin_promote_user', [AdminUsersProfileController::class, 'promote'])->name('admin_promote_user');
+
 
     Route::match(['get', 'post'], 'admin/news', [AdminNewsController::class, 'index'])->name('admin_news_index');
     Route::get('admin/news/{id}/edit', [AdminNewsController::class, 'edit'])->name('admin_news_edit');
@@ -89,8 +86,8 @@ Route::middleware(['auth', 'is_admin'])->group(function() {
     Route::delete('/admin/category/{id}', [AdminCategoryController::class, 'Delete'])->name('admin_category_delete');
 
 
-    Route::get('/contacts', [AdminContactController::class, 'index'])->name('admin_contacts');
-    Route::delete('/contacts/{id}', [AdminContactController::class, 'destroy'])->name('admin_contacts_destroy');
+    Route::get('/contacts', [AdminContactController::class, 'index'])->name('admin_contact');
+    Route::delete('/contacts/{id}', [AdminContactController::class, 'delete'])->name('admin_contact_delete');
 
 });
 
@@ -98,6 +95,8 @@ Route::middleware(['auth', 'is_admin'])->group(function() {
 // User routes
 Route::middleware(['auth'])->group(function(){
     Route::get('/', [HomeController::class, 'index'])->name('home');
+
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
     Route::get('/admin', [AdminController::class, 'index'])->name('admin');
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');

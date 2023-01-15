@@ -78,13 +78,17 @@ class AdminCategoryController extends Controller
     }
 
 
-    public function destroy($id)
+    public function delete($id)
     {
         $category = FaqCategory::findOrFail($id);
+        $faqs = Faq::where('faq_category_id', $id)->get();
+        if(count($faqs) > 0) {
+            return redirect()->route('admin_category_index')->with('error', 'Cannot delete category with linked FAQs. Please delete the related FAQs first');
+        }
         $category->delete();
-
-        return redirect()->route('admin_category_index')->with('success', 'Category deleted successfully.');
+        return redirect()->route('admin_category_index')->with('success', 'Faq category deleted successfully.');
     }
+
 
 
 

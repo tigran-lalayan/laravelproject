@@ -12,8 +12,7 @@ class AdminController extends Controller
         if (auth()->user()->isAdmin()) {
             return view('admin_dashboard');
         }
-
-
+        else return redirect()->route("home");
     }
 
 }

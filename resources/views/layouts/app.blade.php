@@ -44,7 +44,7 @@
                                 <a class="nav-link" href="{{ route('admin_faq_index') }}">FAQ</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('admin_contacts') }}">Contact</a>
+                                <a class="nav-link" href="{{ route('admin_contact') }}">Contact</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('about') }}">About</a>

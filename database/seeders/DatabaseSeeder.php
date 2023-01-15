@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use Database\Seeders\FaqTableSeeder;
 use Illuminate\Database\Seeder;
 use Database\Seeders\NewsTableSeeder;
+use Database\Seeders\ContactSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -25,7 +26,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UserTableSeeder::class);
         $this->call(NewsTableSeeder::class);
         $this->call(FaqTableSeeder::class);
-
+        $this->call(ContactSeeder::class);
 
     }
 }
