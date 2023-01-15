@@ -56,7 +56,7 @@ Route::middleware(['auth', 'is_admin'])->group(function() {
     Route::get('/admin/users/{user}', [AdminUsersProfileController::class, 'show'])->name('admin_user_profile');
     Route::get('/admin', [AdminDashboardController::class, 'index'])->name('admin_dashboard');
     Route::post('admin_update_profile', [AdminProfileController::class, 'update'])->name('admin_update_profile');
-    Route::post('/admin/users/{user}/promote', [AdminUsersController::class, 'promote'])->name('admin_promote_user');
+    Route::post('/admin/users/{user}/promote', [AdminUsersProfileController::class, 'promote'])->name('admin_promote_user');
 
 
 
